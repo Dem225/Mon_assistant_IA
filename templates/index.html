@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon assistant IA</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #ffffff;
+            color: #111111;
+            min-height: 100vh;
+            display: flex;
+        }
+
+        /* BARRE LATÉRALE */
+        .sidebar {
+            width: 250px;
+            background: #111111;
+            color: #ffffff;
+            padding: 30px 22px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+            margin-bottom: 40px;
+        }
+
+        .sidebar p {
+            color: #b0b0b0;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            font-size: 12px;
+        }
+
+        /* CONTENU PRINCIPAL */
+        .main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+
+        .topbar {
+            height: 75px;
+            border-bottom: 1px solid #eeeeee;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 35px;
+        }
+
+        .topbar h2 {
+            font-size: 17px;
+            font-weight: 600;
+        }
+
+        .status {
+            color: #555555;
+            font-size: 13px;
+        }
+
+        /* CONVERSATION */
+        .chat-container {
+            width: 100%;
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 40px 25px;
+            flex: 1;
+        }
+
+        .welcome {
+            text-align: center;
+            margin: 65px 0 45px;
+        }
+
+        .welcome-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px;
+            border-radius: 18px;
+            background: #111111;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .welcome h1 {
+            font-size: 29px;
+            margin-bottom: 12px;
+        }
+
+        .welcome p {
+            color: #777777;
+            font-size: 14px;
+        }
+
+        /* MESSAGES */
+        .conversation {
+            margin-top: 35px;
+        }
+
+        .message {
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 18px;
+            line-height: 1.7;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+
+        .user-message {
+            background: #f3f3f3;
+            color: #111111;
+        }
+
+        .ai-message {
+            background: #ffffff;
+            border: 1px solid #dddddd;
+            color: #111111;
+        }
+
+        .message-title {
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #555555;
+        }
+
+        /* FORMULAIRE */
+        .form-container {
+            background: #ffffff;
+            border: 1px solid #dddddd;
+            border-radius: 14px;
+            padding: 22px;
+            margin-top: 35px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        select, textarea {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #cccccc;
+            border-radius: 8px;
+            background: #ffffff;
+            color: #111111;
+            font-size: 14px;
+            outline: none;
+        }
+
+        select {
+            margin-bottom: 22px;
+        }
+
+        select:focus, textarea:focus {
+            border-color: #111111;
+        }
+
+        textarea {
+            min-height: 110px;
+            resize: vertical;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        textarea::placeholder {
+            color: #999999;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 15px;
+        }
+
+        button {
+            background: #111111;
+            color: #ffffff;
+            border: none;
+            padding: 13px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: #444444;
+        }
+
+        /* ERREURS */
+        .error {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f3f3f3;
+            border: 1px solid #cccccc;
+            border-radius: 8px;
+            color: #111111;
+            line-height: 1.6;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 18px;
+            color: #888888;
+            font-size: 12px;
+        }
+
+        /* MOBILE */
+        @media (max-width: 750px) {
+            .sidebar {
+                display: none;
+            }
+
+            .topbar {
+                padding: 0 18px;
+            }
+
+            .chat-container {
+                padding: 25px 15px;
+            }
+
+            .welcome {
+                margin: 45px 0 30px;
+            }
+
+            .welcome h1 {
+                font-size: 23px;
+            }
+
+            .form-container {
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <aside class="sidebar">
+        <div class="logo">Nova AI</div>
+
+        <p>
+            Ton assistant intelligent propulsé par OpenRouter.
+            Pose tes questions et découvre les possibilités de l'intelligence artificielle.
+        </p>
+
+        <div class="sidebar-footer">
+            <p>Assistant IA personnel</p>
+            <p>Propulsé par OpenRouter</p>
+            <p>Version 1.0</p>
+        </div>
+    </aside>
+
+    <main class="main">
+
+        <header class="topbar">
+            <h2>Assistant intelligent</h2>
+            <span class="status">● En ligne</span>
+        </header>
+
+        <section class="chat-container">
+
+            <div class="welcome">
+                <div class="welcome-icon">✦</div>
+                <h1>Comment puis-je t'aider ?</h1>
+                <p>Choisis ton modèle et commence une conversation.</p>
+            </div>
+
+            {% if question or reponse %}
+                <div class="conversation">
+
+                    {% if question %}
+                        <div class="message user-message">
+                            <div class="message-title">TOI</div>
+                            {{ question }}
+                        </div>
+                    {% endif %}
+
+                    {% if reponse %}
+                        <div class="message ai-message">
+                            <div class="message-title">NOVA AI</div>
+                            {{ reponse }}
+                        </div>
+                    {% endif %}
+
+                </div>
+            {% endif %}
+
+            {% if erreur %}
+                <div class="error">
+                    <strong>Une erreur est survenue :</strong>
+                    <p>{{ erreur }}</p>
+                </div>
+            {% endif %}
+
+            <div class="form-container">
+
+                <form action="/Chatebot/chat" method="post">
+
+                    <label for="model">Modèle d'intelligence artificielle</label>
+
+                    <select id="model" name="model" required>
+                        {% for modele in modeles %}
+                            <option value="{{ modele.id }}"
+                                {% if modele.id == modele_choisi %}selected{% endif %}>
+                                {{ modele.nom }} ({{ modele.id }})
+                            </option>
+                        {% endfor %}
+                    </select>
+
+                    <label for="question">Ton message</label>
+
+                    <textarea
+                        id="question"
+                        name="question"
+                        placeholder="Écris ta question ici..."
+                        required
+                    >{{ question or "" }}</textarea>
+
+                    <div class="button-container">
+                        <button type="submit">Envoyer ➜</button>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </section>
+
+        <footer class="footer">
+            Nova AI · Propulsé par OpenRouter
+        </footer>
+
+    </main>
+
+</body>
+</html>

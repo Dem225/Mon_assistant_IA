@@ -1,0 +1,67 @@
+
+# =========================
+# ENVIRONNEMENT VIRTUEL
+# =========================
+.venv/
+venv/
+env/
+
+# =========================
+# VARIABLES SECRÈTES
+# =========================
+.env
+.env.*
+!.env.example
+
+# =========================
+# PYTHON
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# =========================
+# OUTILS DE DÉVELOPPEMENT
+# =========================
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# =========================
+# JUPYTER
+# =========================
+.ipynb_checkpoints/
+
+# =========================
+# RAG ET BASES VECTORIELLES
+# =========================
+chroma_db/
+chroma/
+vector_db/
+embeddings/
+*.faiss
+
+# =========================
+# FICHIERS TEMPORAIRES
+# =========================
+*.log
+*.tmp
+*.bak
+.DS_Store
+Thumbs.db
+
+# =========================
+# ÉDITEURS
+# =========================
+.vscode/
+.idea/
+
+# =========================
+# FICHIERS DE DONNÉES PRIVÉES
+# =========================
+secrets/
+credentials/
